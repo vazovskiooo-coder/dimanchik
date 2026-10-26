@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Диман — свой человек</title>
+<style>
+:root {
+ --site-primary:#ff5d36;
+ --site-secondary:#171923;
+ --site-background:#0c0d12;
+ --site-on-primary:#ffffff;
+ --site-on-secondary:#f7f7fb;
+ --site-on-background:#f7f7fb;
+ --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+ --site-font-heading: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+ --site-heading-scale:1;
+ --site-spacing-scale:1;
+ --site-radius-scale:1;
+ --site-decoration-opacity:1;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--site-background);color:var(--site-on-background);font-family:var(--site-font-body)}
+#app{min-height:100vh;background-color:var(--site-background);position:relative;overflow:hidden;border-radius:0}
+.decor{position:absolute;inset:0;pointer-events:none;opacity:var(--site-decoration-opacity);overflow:hidden}
+.decor:before,.decor:after{content:"";position:absolute;width:390px;height:390px;border:1px solid #ffffff13;border-radius:50%;right:-130px;top:80px}
+.decor:after{width:530px;height:530px;right:-200px;top:10px}
+.noise{position:absolute;inset:0;opacity:.07;background-image:radial-gradient(#fff 0.6px,transparent .6px);background-size:7px 7px}
+.wrap{position:relative;max-width:1000px;margin:auto;padding:28px 22px 70px}
+nav{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#aaa}
+.logo{font-weight:900;color:#fff}.logo span{color:var(--site-primary)}
+.pill{border:1px solid #ffffff25;border-radius:999px;padding:9px 13px;color:#c9c9d0}
+.hero{padding:95px 0 65px;max-width:760px}
+.kicker{color:var(--site-primary);font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+h1{font-family:var(--site-font-heading);font-size:clamp(66px,12vw,138px);line-height:.84;letter-spacing:-.035em;text-transform:uppercase;margin:20px 0 24px;font-weight:900}
+h1 em{font-style:normal;color:var(--site-primary);display:block}
+.lead{font-size:clamp(16px,2.4vw,20px);line-height:1.65;color:#b7b8c2;max-width:570px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+button,.button{font:inherit;border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:10px;font-weight:800;transition:transform .2s,background .2s}
+button:hover,.button:hover{transform:translateY(-2px)}
+.primary{background:var(--site-primary);color:white;box-shadow:0 8px 28px #ff5d3630}
+.secondary{background:#ffffff0b;color:#f6f6f9;border:1px solid #ffffff22}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:15px}
+.card{background:var(--site-secondary);border:1px solid #ffffff15;border-radius:calc(22px * var(--site-radius-scale));padding:28px;position:relative;overflow:hidden}
+.card h2{font-size:calc(23px * var(--site-heading-scale));margin:0 0 12px}
+.card p{color:#aeb0bd;line-height:1.6;margin:0}
+.timer-card{background:linear-gradient(145deg,#25202a,#171923 65%);border-color:#ff5d3645}
+.timer-label{font-size:11px;color:#ff9b83;letter-spacing:.18em;text-transform:uppercase;font-weight:800}
+.timer-title{font-size:24px;font-weight:900;margin:12px 0 22px}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.unit{background:#ffffff0b;border:1px solid #ffffff10;border-radius:12px;padding:14px 6px;text-align:center}
+.num{font-size:clamp(24px,4vw,38px);font-weight:900;letter-spacing:-.05em}
+.unit small{display:block;color:#9c9eaa;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:5px}
+.date-note{color:#9c9eaa;font-size:12px;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{border-top:1px solid #ffffff20;padding-top:14px}
+.stat strong{display:block;font-size:24px}.stat span{font-size:11px;color:#999ba8}
+.quote{font-size:clamp(21px,3vw,30px);line-height:1.3;font-weight:850;letter-spacing:-.03em}
+.quote span{color:var(--site-primary)}
+footer{margin-top:55px;padding-top:20px;border-top:1px solid #ffffff18;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#777986;font-size:12px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#f5f5f5;color:#151515;padding:12px 18px;border-radius:10px;font-weight:800;transition:.25s;z-index:5}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:680px){.wrap{padding:22px 17px 45px}.hero{padding:75px 0 45px}.grid{grid-template-columns:1fr}.card{padding:22px}.stats{gap:8px}.stat strong{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="decor"><div class="noise"></div></div>
+<div class="wrap">
+<nav><div class="logo">БРАТСКИЙ <span>САЙТ®</span></div><div class="pill">для Димана · от кореша</div></nav>
+<main>
+<section class="hero">
+<div class="kicker">немного с опозданием · но от души</div>
+<h1>ДИМАН,<em>С ПРОШЕДШИМ!</em></h1>
+<p class="lead">Корчик, с прошедшим днём рождения тебя! Да, поздравление немного опоздало, но братские пожелания не имеют срока годности. Желаю, чтобы жизнь выдавала только жирные моменты, рядом были настоящие люди, а каждый новый день приносил повод сказать: «вот это я понимаю, нормально живём».</p>
+<div class="actions"><button class="primary" onclick="document.getElementById('message').scrollIntoView({behavior:'smooth'})">Открыть послание ↓</button></div>
+</section>
+<section class="grid">
+<div class="card timer-card">
+<div class="timer-label">обратный отсчёт до встречи</div>
+<div class="timer-title">Ещё немного — и увидимся, брат 🤝</div>
+<div class="countdown" aria-live="polite">
+<div class="unit"><div class="num" id="days">—</div><small>дней</small></div>
+<div class="unit"><div class="num" id="hours">—</div><small>часов</small></div>
+<div class="unit"><div class="num" id="minutes">—</div><small>минут</small></div>
+<div class="unit"><div class="num" id="seconds">—</div><small>секунд</small></div>
+</div>
+<div class="date-note" id="dateNote">Цель: через полгода</div>
+</div>
+<div class="card">
+<div class="kicker">кореш — это навсегда</div>
+<h2 style="margin-top:13px">Не просто знакомый.</h2>
+<p>А свой человек, с которым можно и поржать до слёз, и просто быть собой. Пусть у тебя всё складывается так, как ты сам хочешь — без лишней суеты и с максимумом кайфа.</p>
+<div class="stats"><div class="stat"><strong>100%</strong><span>уважения</span></div><div class="stat"><strong>∞</strong><span>приколов</span></div><div class="stat"><strong>🤜🤛</strong><span>братства</span></div></div>
+</div>
+</section>
+<section class="card" id="message" style="margin-top:18px">
+<div class="kicker">лично тебе, Диман</div>
+<div class="quote" style="margin:18px 0">Пусть бабки водятся, здоровье не подводит, мечты становятся планами, а планы — <span>реальностью.</span></div>
+<p>Желаю побольше историй, которые потом будем вспоминать и орать со смеху. Не теряй свой характер, двигайся к своему и помни: впереди ещё куча моментов, которые мы обязательно проживём вместе. С прошедшим днём рождения, корчик! Пусть этот новый год жизни принесёт тебе удачу, бабки, здоровье и море поводов для радости. Скоро увидимся — это будет отдельная история 🔥</p>
+<div class="actions"><button class="primary" onclick="showToast('🤝 Братский пакт активирован. Скоро увидимся!')">Братский пакт 🤝</button></div>
+</section>
+</main>
+<footer><span>СДЕЛАНО С УВАЖЕНИЕМ К КОРЕШУ</span><span>ДИМАН × ЕГО БРАТАН</span></footer>
+</div>
+</div>
+<div id="toast" role="status"></div>
+<script>
+// По умолчанию отсчёт идёт до даты через 6 календарных месяцев.
+// Дату можно поменять в строке ниже на точную дату вашей встречи.
+const target = new Date();
+target.setMonth(target.getMonth() + 6);
+function updateTimer(){
+ const diff = Math.max(0, target.getTime() - Date.now());
+ const d = Math.floor(diff/86400000);
+ const h = Math.floor(diff%86400000/3600000);
+ const m = Math.floor(diff%3600000/60000);
+ const s = Math.floor(diff%60000/1000);
+ document.getElementById('days').textContent=d;
+ document.getElementById('hours').textContent=String(h).padStart(2,'0');
+ document.getElementById('minutes').textContent=String(m).padStart(2,'0');
+ document.getElementById('seconds').textContent=String(s).padStart(2,'0');
+ document.getElementById('dateNote').textContent='Цель: '+target.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})+' · можно заменить на точную дату встречи';
+}
+updateTimer();setInterval(updateTimer,1000);
+function showToast(text){const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
+</script>
+</body>
+</html>
